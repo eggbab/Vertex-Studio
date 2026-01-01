@@ -111,7 +111,7 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden z-10 pt-32 pb-20 bg-white">
+    <div ref={containerRef} className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden z-10 pt-24 pb-16 bg-white px-4">
       
       {/* Interactive Dot Grid Background */}
       <canvas 
@@ -121,21 +121,21 @@ const Hero: React.FC = () => {
 
       <motion.div 
         style={{ y: y1, opacity, scale }}
-        className="text-center z-10 px-4 max-w-7xl mx-auto flex flex-col items-center w-full"
+        className="text-center z-10 max-w-7xl mx-auto flex flex-col items-center w-full"
       >
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mb-12"
+          className="mb-8 md:mb-12"
         >
            <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/70 backdrop-blur-md border border-gray-200 shadow-[0_2px_10px_rgba(0,0,0,0.05)] hover:shadow-[0_5px_20px_rgba(49,134,255,0.15)] transition-all cursor-default group">
              <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3186FF] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#3186FF]"></span>
               </span>
-             <span className="text-[13px] font-bold tracking-widest text-gray-600 uppercase font-display group-hover:text-[#3186FF] transition-colors">Conversion Rate Optimization</span>
+             <span className="text-[13px] font-bold tracking-widest text-gray-600 uppercase font-display group-hover:text-[#3186FF] transition-colors">Vertex Studio는 언제나 온라인입니다.</span>
            </div>
         </motion.div>
 
@@ -154,7 +154,7 @@ const Hero: React.FC = () => {
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-          className="font-display text-[13vw] md:text-[8.5vw] leading-[0.9] font-bold tracking-tighter text-[#111827] mb-12 text-center break-keep relative"
+          className="font-display text-[13vw] md:text-[8.5vw] leading-[0.9] font-bold tracking-tighter text-[#111827] mb-8 md:mb-12 text-center break-keep relative"
         >
           Design for
           <br />
@@ -171,7 +171,7 @@ const Hero: React.FC = () => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-lg md:text-2xl text-gray-500 font-normal max-w-3xl mx-auto leading-relaxed break-keep mb-16 px-4"
+          className="text-lg md:text-2xl text-gray-500 font-normal max-w-3xl mx-auto leading-relaxed break-keep mb-12 md:mb-16 px-4"
         >
           예쁜 홈페이지는 잊으세요. 우리는 오직 <strong className="text-gray-900 font-semibold">'팔리는'</strong> 랜딩페이지만 만듭니다.
           <br className="hidden md:block"/>
@@ -183,7 +183,7 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
-          className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto px-6"
+          className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-6 md:px-6"
         >
           <button className="group relative px-9 py-5 bg-[#111827] text-white rounded-full text-base font-bold tracking-wide overflow-hidden transition-all hover:scale-105 shadow-2xl shadow-blue-900/20 cursor-hover min-w-[220px]">
             <span className="relative z-10 flex items-center justify-center gap-2">

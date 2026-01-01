@@ -52,14 +52,14 @@ const plans = [
 
 const Pricing: React.FC = () => {
   return (
-    <section id="pricing" className="py-32 bg-white relative z-10 overflow-hidden">
+    <section id="pricing" className="py-20 md:py-32 bg-white relative z-10 overflow-hidden">
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-gray-50 rounded-full blur-[100px] -z-10" />
       </div>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        <div className="text-center mb-24 relative">
+        <div className="text-center mb-16 md:mb-24 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -68,16 +68,16 @@ const Pricing: React.FC = () => {
             <span className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-[#3186FF] bg-blue-50/50 rounded-full border border-blue-100 uppercase backdrop-blur-sm">
               <Sparkles className="w-3 h-3" /> Pricing Plans
             </span>
-            <h2 className="text-5xl md:text-7xl font-display font-bold text-gray-900 mb-8 tracking-tighter leading-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-display font-bold text-gray-900 mb-6 md:mb-8 tracking-tighter leading-tight">
               합리적인 투자, <br className="md:hidden" />확실한 <span className="text-[#3186FF]">ROI</span>
             </h2>
-            <p className="text-xl text-gray-500 max-w-2xl mx-auto break-keep leading-relaxed font-light">
+            <p className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto break-keep leading-relaxed font-light">
               단발성 제작부터 지속적인 성장을 위한 구독 모델까지.<br/> 비즈니스 단계에 맞는 최적의 플랜을 선택하세요.
             </p>
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 items-start">
           {plans.map((plan, i) => (
             <motion.div
               key={i}
@@ -85,7 +85,7 @@ const Pricing: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.6 }}
-              className={`relative p-10 rounded-[2.5rem] flex flex-col h-full transition-all duration-500 group ${
+              className={`relative p-6 md:p-10 rounded-[1.5rem] md:rounded-[2.5rem] flex flex-col h-full transition-all duration-500 group ${
                 plan.highlight 
                   ? 'bg-[#111827] text-white shadow-2xl shadow-blue-900/30 scale-100 lg:scale-110 z-10' 
                   : 'bg-white text-gray-900 border border-gray-100 shadow-xl shadow-gray-200/50 hover:border-gray-300 hover:shadow-2xl hover:-translate-y-1'
@@ -93,7 +93,7 @@ const Pricing: React.FC = () => {
             >
               {plan.highlight && (
                 <>
-                  <div className="absolute -inset-[1px] bg-gradient-to-b from-blue-500 to-purple-600 rounded-[2.5rem] -z-10 blur-[1px] opacity-70" />
+                  <div className="absolute -inset-[1px] bg-gradient-to-b from-blue-500 to-purple-600 rounded-[1.5rem] md:rounded-[2.5rem] -z-10 blur-[1px] opacity-70" />
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1 shadow-lg border border-white/20">
                     <Star className="w-3 h-3 fill-white" /> Popular Choice
                   </div>

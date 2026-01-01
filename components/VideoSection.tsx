@@ -4,14 +4,14 @@ import { BarChart3 } from 'lucide-react';
 
 const VideoSection: React.FC = () => {
   return (
-    <section className="py-32 px-4 md:px-8 bg-white relative z-10 overflow-hidden">
+    <section className="py-20 md:py-32 px-4 md:px-8 bg-white relative z-10 overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
-        <div className="text-center mb-20 px-4">
+        <div className="text-center mb-16 md:mb-20 px-4">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-display font-bold text-gray-900 mb-8 tracking-tighter"
+            className="text-3xl md:text-4xl lg:text-6xl font-display font-bold text-gray-900 mb-6 md:mb-8 tracking-tighter"
           >
             감각이 아닌 <span className="text-[#3186FF]">데이터</span>로 증명합니다
           </motion.h2>
@@ -20,10 +20,10 @@ const VideoSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-xl text-gray-500 max-w-3xl mx-auto break-keep leading-relaxed font-light"
+            className="text-lg md:text-xl text-gray-500 max-w-3xl mx-auto break-keep leading-relaxed font-light"
           >
-            대부분의 웹사이트는 방문자의 98%를 놓치고 있습니다.<br/>
-            Vertex Studio는 그 잃어버린 <strong className="text-gray-900 font-medium">98%를 고객으로 되돌리는 프로세스</strong>를 설계합니다.
+            대부분의 웹사이트는 방문자의 90%를 놓치고 있습니다.<br/>
+            Vertex Studio는 그 잃어버린 <strong className="text-gray-900 font-medium">90%를 고객으로 되돌리는 프로세스</strong>를 설계합니다.
           </motion.p>
         </div>
 
@@ -32,12 +32,12 @@ const VideoSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full aspect-video rounded-[3rem] overflow-hidden bg-gray-100 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.1)] group cursor-pointer border border-gray-100 mx-auto"
+          className="relative w-full aspect-video rounded-[1.5rem] md:rounded-[3rem] overflow-hidden bg-gray-100 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.1)] group cursor-pointer border border-gray-100 mx-auto"
         >
           {/* Dashboard/Analytics Imagery */}
           <div className="absolute inset-0 bg-gray-50">
              <img 
-              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop" 
+              src="https://images.unsplash.com/photo-1608222351212-18fe0ec7b13b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
               alt="Analytics Dashboard showing growth" 
               className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-[1.5s] ease-out"
             />

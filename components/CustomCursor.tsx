@@ -60,10 +60,9 @@ const CustomCursor: React.FC = () => {
       variants={variants}
       animate={isHovering ? "hover" : "default"}
       transition={{
-        type: "spring",
-        stiffness: 500,
-        damping: 28,
-        mass: 0.5
+        type: "tween",
+        duration: 0,
+        ease: "linear"
       }}
     />
   );
