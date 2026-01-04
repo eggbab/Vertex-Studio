@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" class="scroll-smooth antialiased">
+<html lang="ko" class="antialiased">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,6 +9,28 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+      /* 스크롤 복원 완전 비활성화 */
+      html {
+        scroll-behavior: auto !important;
+        scroll-padding-top: 0 !important;
+        scroll-snap-type: none !important;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      body {
+        scroll-behavior: auto !important;
+        overflow-x: hidden;
+      }
+
+      * {
+        scroll-behavior: auto !important;
+      }
+
+      :root {
+        scroll-behavior: auto;
+      }
+
       :root {
         --background: #ffffff;
         --foreground: #111827;
@@ -61,6 +83,40 @@
     "tailwind-merge": "https://esm.sh/tailwind-merge@^3.4.0"
   }
 }
+</script>
+<script>
+  // 페이지 로드 시 즉시 스크롤 리셋
+  (function() {
+    // 브라우저 스크롤 복원 비활성화
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    // 즉시 스크롤 리셋 함수
+    function forceScrollToTop() {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      if (document.scrollingElement) {
+        document.scrollingElement.scrollTop = 0;
+      }
+    }
+
+    // 페이지 로드 전 즉시 실행
+    forceScrollToTop();
+
+    // DOM 로드 시 실행
+    document.addEventListener('DOMContentLoaded', forceScrollToTop);
+
+    // 페이지 완전 로드 시 실행
+    window.addEventListener('load', forceScrollToTop);
+
+    // 여러 타이밍에서 실행
+    setTimeout(forceScrollToTop, 0);
+    setTimeout(forceScrollToTop, 10);
+    setTimeout(forceScrollToTop, 50);
+    setTimeout(forceScrollToTop, 100);
+  })();
 </script>
 </head>
   <body>

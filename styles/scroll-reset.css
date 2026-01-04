@@ -1,0 +1,26 @@
+/* 스크롤 복원 완전 비활성화 */
+html {
+  scroll-behavior: auto !important;
+  scroll-padding-top: 0 !important;
+  scroll-snap-type: none !important;
+}
+
+body {
+  scroll-behavior: auto !important;
+  overflow-x: hidden;
+}
+
+/* 모든 요소의 스크롤 동작 제어 */
+* {
+  scroll-behavior: auto !important;
+}
+
+/* 페이지 로드 시 즉시 스크롤 리셋 */
+html:focus-within {
+  scroll-behavior: auto;
+}
+
+/* 자동 스크롤 방지 */
+:root {
+  scroll-behavior: auto;
+}

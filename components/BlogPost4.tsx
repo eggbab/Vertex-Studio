@@ -1,28 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, Tag, User, ArrowUpRight, Smartphone, Users, Target, TrendingUp } from 'lucide-react';
+import { ArrowUpRight, Calendar, User, Tag, ShoppingBag, Store, Users, TrendingUp, CheckCircle, AlertCircle } from 'lucide-react';
 
 const BlogPost4: React.FC = () => {
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const forceScrollToTop = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      if (document.scrollingElement) {
+        document.scrollingElement.scrollTop = 0;
+      }
+    };
+
+    forceScrollToTop();
+    
+    const timers = [
+      setTimeout(forceScrollToTop, 0),
+      setTimeout(forceScrollToTop, 10),
+      setTimeout(forceScrollToTop, 50)
+    ];
+
+    const animationTimer = setTimeout(() => {
+      setIsReady(true);
+    }, 100);
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+      clearTimeout(animationTimer);
+    };
+  }, []);
+
   const blogData = {
-    title: "모바일 퍼스트가 죽었다",
-    date: "2025년 11월 28일",
-    category: "Strategy",
-    author: "Vertex Studio 팀",
-    readTime: "9분",
-    image: "https://images.unsplash.com/photo-1512941937309-157bb6b3ad2e?q=80&w=2574&auto=format&fit=crop",
-    tags: ["모바일", "반응형", "옴니채널", "전략"]
+    title: "온라인과 오프라인을 잇는 쇼핑의 미래",
+    date: "2025년 10월 15일",
+    category: "Business",
+    readTime: "10분",
+    author: "비즈니스 팀",
+    tags: ["쇼핑", "옴니채널", "고객 경험"]
   };
 
   const relatedPosts = [
     {
-      title: "전환율을 3배 높이는 디자인의 물리학",
+      title: "전환율을 3배 높이는 디자인의 비밀",
       date: "2025년 10월 24일",
       category: "Design",
       slug: "conversion-design-physics"
     },
     {
-      title: "2026년 웹 디자인 트렌드: 중력을 거스르다",
+      title: "2026년 웹 디자인: 무엇이 바뀔까요?",
       date: "2025년 12월 05일",
       category: "Trends",
       slug: "2026-design-trends"
@@ -30,280 +59,333 @@ const BlogPost4: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-4">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2 text-gray-900 hover:text-[#3186FF] transition-colors">
-              <ArrowLeft className="w-4 h-4" />
-              <span className="font-medium">홈으로</span>
-            </Link>
-            <div className="flex items-center gap-4">
-              <Link to="/blog" className="text-sm text-gray-500 hover:text-[#3186FF] transition-colors">블로그 목록</Link>
-              <span className="text-sm text-gray-500">Vertex Studio Blog</span>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
+      animate={isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.6 }}
+      className="min-h-screen"
+    >
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-6 md:px-12">
+      <section className="px-6 md:px-12 pt-32 pb-16 bg-gradient-to-br from-orange-50 to-red-50">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            {/* Category Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-50 text-orange-600 rounded-full text-sm font-medium mb-6">
-              <Smartphone className="w-4 h-4" />
-              {blogData.category}
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-4">
+              <span className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">
+                {blogData.category}
+              </span>
+              <span className="text-gray-500 text-sm">{blogData.readTime}</span>
             </div>
-
-            {/* Title */}
-            <h1 className="text-4xl md:text-6xl font-display font-bold text-gray-900 mb-8 leading-tight tracking-tighter">
-              {blogData.title}
-            </h1>
-
-            {/* Meta Info */}
-            <div className="flex flex-wrap items-center gap-6 text-gray-500 mb-12">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                <span>{blogData.date}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <User className="w-4 h-4" />
-                <span>{blogData.author}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4" />
-                <span>{blogData.readTime} 읽기</span>
-              </div>
-            </div>
-          </motion.div>
+            <Link 
+              to="/blog" 
+              className="flex items-center gap-2 text-gray-600 hover:text-orange-600 transition-colors text-sm font-medium"
+            >
+              블로그 목록으로 돌아가기
+              <ArrowUpRight className="w-4 h-4" />
+            </Link>
+          </div>
+          
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-gray-900">
+            온라인과 오프라인을 잇는 쇼핑의 미래
+          </h1>
+          
+          <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+            성공적인 쇼핑 경험은 온라인과 오프라인이 만날 때 완성됩니다. 
+            어떻게 가능한지 알아보세요.
+          </p>
+          
+          <div className="flex items-center gap-6 text-gray-500 text-sm">
+            <span className="flex items-center gap-2">
+              <User className="w-4 h-4" />
+              {blogData.author}
+            </span>
+            <span className="flex items-center gap-2">
+              <Calendar className="w-4 h-4" />
+              {blogData.date}
+            </span>
+          </div>
         </div>
       </section>
 
-      {/* Content */}
-      <section className="px-6 md:px-12 pb-20">
+      {/* Main Content */}
+      <section className="px-6 md:px-12 py-16 bg-white">
         <div className="max-w-4xl mx-auto">
-          <motion.article
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="prose prose-lg max-w-none"
-          >
-            {/* Introduction */}
-            <div className="text-xl text-gray-600 leading-relaxed mb-12 font-light">
-              <p className="mb-6">
-                2010년 Luke Wroblewski가 "Mobile First"를 제창했을 때, 스마트폰은 전체 웹 트래픽의 3%를 차지했습니다. 
-                15년이 지난 지금, 이 비율은 70%를 넘어섰지만 '모바일 퍼스트'는 더 이상 유효한 전략이 아닙니다.
-              </p>
-              <p>
-                Vertex Studio는 50개 기업의 2,700만 사용자 데이터를 분석했습니다. 
-                그 결과는 충격적이었습니다. '모바일 전용' 경험은 사용자 만족도를 42%나 떨어뜨렸습니다.
-              </p>
-            </div>
+          
+          {/* Introduction */}
+          <div className="mb-12">
+            <p className="text-gray-600 leading-relaxed text-lg mb-6">
+              요즘 사람들은 온라인으로 쇼핑하다가도 매장에 직접 가서 
+              보고 구매하고, 매장에서 보다가 온라인으로 주문하기도 합니다. 
+              이렇게 온라인과 오프라인을 넘나들며 쇼핑하는 것을 
+              '옴니채널'이라고 부릅니다.
+            </p>
+            
+            <p className="text-gray-600 leading-relaxed text-lg">
+              성공적인 기업들은 이런 고객들의 쇼핑 습관을 잘 이해하고, 
+              온라인과 오프라인이 완벽하게 연결된 경험을 제공합니다. 
+              어떻게 이것이 가능한지 실제 사례를 통해 알아보겠습니다.
+            </p>
+          </div>
 
-            {/* Main Content */}
-            <div className="space-y-12">
-              {/* Part 1: 모바일 퍼스트의 종말 */}
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">
-                  팩트 1: 모바일 퍼스트는 더 이상 유효하지 않다
-                </h2>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  2010년 Luke Wroblewski가 "Mobile First"를 제창했을 때, 스마트폰은 전체 웹 트래픽의 3%를 차지했습니다. 
-                  15년이 지난 지금, 이 비율은 70%를 넘어섰지만 '모바일 퍼스트'는 더 이상 유효한 전략이 아닙니다.
-                </p>
-                
-                <div className="bg-orange-50 border-l-4 border-orange-600 p-6 rounded-lg mb-6">
-                  <p className="text-gray-800 font-medium">
-                    💡 핵심 인사이트: 2025년 현재, 사용자는 하루에 평균 17번의 디바이스를 전환하며 경험을 이어갑니다. 
-                    데스크탑, 모바일, 태블릿, 웨어러블, 스마트 TV까지 모든 화면에서 일관된 경험을 제공하는 '옴니채널 퍼스트' 시대가 도래했습니다.
-                  </p>
+          {/* Section 1: What is Omnichannel */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <ShoppingBag className="w-8 h-8 text-orange-600" />
+              옴니채널이 무엇인가요?
+            </h2>
+            
+            <p className="text-gray-600 leading-relaxed mb-6">
+              옴니채널은 고객들이 온라인과 오프라인을 자유롭게 넘나들며 
+              일관된 경험을 하도록 만드는 쇼핑 방식입니다. 고객들은 
+              어디에서 쇼핑하든 똑같은 서비스와 가격, 정보를 받을 수 
+              있습니다.
+            </p>
+
+            <div className="bg-orange-50 border-l-4 border-orange-600 p-6 rounded-lg mb-6">
+              <h3 className="text-lg font-bold text-gray-900 mb-4">옴니채널의 특징</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex items-start gap-3">
+                  <Store className="w-5 h-5 text-orange-600 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <strong className="text-gray-800">온라인 → 오프라인:</strong>
+                    <p className="text-gray-600 text-sm mt-1">온라인 주문, 매장 픽업 가능</p>
+                  </div>
                 </div>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Vertex Studio는 50개 기업의 2,700만 사용자 데이터를 분석했습니다. 
-                  그 결과는 충격적이었습니다. '모바일 전용' 경험은 사용자 만족도를 42%나 떨어뜨렸습니다.
-                  사용자들은 더 이상 단일 디바이스에 갇히기를 원하지 않습니다.
-                </p>
-                
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  실제로 한 이커머스 기업이 모바일 퍼스트에서 옴니채널로 전환한 결과, 
-                  고객 만족도가 85% 향상되고 평균 객단가가 2.8배 증가했습니다. 
-                  모바일에서 시작된 쇼핑을 데스크탑에서 완료하고, 태블릿에서 다시 확인하는 경험이 
-                  구매 결정에 큰 영향을 미쳤습니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed">
-                  모바일 퍼스트의 세 가지 핵심 사실을 기억하세요: 첫째, 사용자는 여러 디바이스를 사용합니다. 
-                  둘째, 경험의 연속성이 중요합니다. 셋째, 일관성이 성공의 열쇠입니다. 
-                  이제는 모바일이 아닌 '사용자 퍼스트' 시대입니다.
-                </p>
-              </div>
-
-              {/* Part 2: 옴니채널의 과학 */}
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">
-                  팩트 2: 옴니채널은 과학이 아닌 심리학이다
-                </h2>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  옴니채널은 단순히 여러 디바이스에서 보이는 디자인이 아닙니다. 
-                  사용자의 심리와 행동 패턴을 이해해야 합니다. 
-                  디바이스 전환은 사용자의 의도와 목적에 따라 달라집니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  우리는 사용자의 24시간 동안의 디바이스 사용 패턴을 분석했습니다. 
-                  오전 7-9시에는 모바일로 뉴스를 보고, 오전 9-12시에는 데스크탑으로 업무를 처리하며, 
-                  점심 시간에는 모바일로 배달을 주문하고, 저녁에는 태블릿으로 엔터테인먼트를 즐깁니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  중요한 것은 '콘텍스트'입니다. 사용자가 어디에 있든, 어떤 상황에 있든 
-                  최적의 경험을 제공해야 합니다. 출퇴근길에는 간결한 정보를, 집에서는 상세한 정보를, 
-                  휴식 시간에는 몰입감 있는 경험을 제공해야 합니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed">
-                  옴니채널의 세 가지 심리학적 원칙을 기억하세요: 첫째, 콘텍스트를 이해해야 합니다. 
-                  둘째, 연속성을 보장해야 합니다. 셋째, 일관성을 유지해야 합니다. 
-                  이 원칙들을 따르면 옴니채널은 강력한 비즈니스 도구가 됩니다.
-                </p>
-              </div>
-
-              {/* Part 3: 실제 구현 사례 */}
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">
-                  팩트 3: 옴니채널 성공 사례와 데이터
-                </h2>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Vertex Studio는 수십 개 기업의 옴니채널 전환을 성공적으로 이끌었습니다. 
-                  이 데이터들은 옴니채널이 비즈니스에 미치는 영향을 명확하게 보여줍니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  글로벌 이커머스 기업이 옴니채널 전략을 도입한 결과, 
-                  모바일 앱, 웹, 키오스크 간의 경험 일관성으로 고객 만족도가 85% 향상되고 
-                  평균 객단가가 2.8배 증가했습니다. 모바일에서 시작된 쇼핑의 67%가 다른 디바이스에서 이어졌습니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  핀테크 서비스 기업이 옴니채널을 구현한 결과, 
-                  신규 고객이 45% 증가하고 월간 활성 사용자가 200% 늘었습니다. 
-                  모바일로 가입한 고객이 데스크탑에서 상세한 분석을 보고, 태블릿에서 투자를 실행하는 
-                  완벽한 여정을 제공했습니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed">
-                  옴니채널은 더 이상 선택이 아닌 필수입니다. 사용자는 이미 여러 디바이스를 
-                  자연스럽게 사용하고 있으며, 비즈니스는 이에 맞춰 경험을 제공해야 합니다. 
-                  옴니채널은 성장의 핵심 동력이 될 것입니다.
-                </p>
-              </div>
-
-              {/* Part 4: 기술적 구현 가이드 */}
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">
-                  팩트 4: 옴니채널 기술 구현 가이드
-                </h2>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  옴니채널 구현은 복잡해 보이지만, 올바른 접근법을 따르면 충분히 가능합니다. 
-                  우리는 3년간의 경험을 통해 최적의 구현 프로세스를 정리했습니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  첫째, Headless CMS 아키텍처가 필수입니다. 콘텐츠와 프레젠테이션을 분리하여 
-                  모든 디바이스에 최적화된 형태로 전달할 수 있습니다. Strapi, Contentful, 
-                  Sanity 같은 Headless CMS를 사용하세요.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  둘째, API-First 접근법을 따라야 합니다. 모든 기능을 API로 제공하고, 
-                  각 디바이스에서 최적화된 클라이언트를 개발합니다. GraphQL이나 REST API를 
-                  사용하여 데이터를 효율적으로 전송하세요.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  셋째, 실시간 데이터 동기화가 중요합니다. 사용자의 상태, 장바구니, 
-                  선호 등을 모든 디바이스에서 실시간으로 동기화해야 합니다. WebSocket이나 
-                  Server-Sent Events를 활용하세요.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed">
-                  넷째, 반응형 디자인을 넘어야 합니다. 단순히 화면 크기에 맞추는 것을 넘어, 
-                  각 디바이스의 특성을 최대한 활용하는 경험을 설계해야 합니다.
-                </p>
-              </div>
-
-              {/* Part 5: 2026년을 준비하는 전략 */}
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">
-                  팩트 5: 2026년을 준비하는 옴니채널 전략
-                </h2>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  2026년에는 AR/VR 디바이스, 스마트 카, 홈 IoT까지 더 많은 디바이스가 
-                  생태계에 합류할 것입니다. 지금 준비하지 않으면 2년 안에 디지털 경쟁에서 도태될 것입니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  AR/VR 디바이스는 가상과 현실을 넘나드는 경험을 제공할 것입니다. 
-                  스마트 카는 이동 중에도 연결된 경험을 가능하게 하며, 홈 IoT는 
-                  모든 가전이 인터넷에 연결된 스마트 홈으로 진화할 것입니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  중요한 것은 '미래 지향성'입니다. 현재의 옴니채널 전략을 수립할 때 
-                  2-3년 후에 등장할 새로운 디바이스들을 고려해야 합니다. 
-                  확장 가능한 아키텍처와 유연한 시스템을 구축하는 것이 핵심입니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed">
-                  2026년을 준비하는 다섯 가지 전략을 기억하세요: 첫째, 확장 가능한 아키텍처를 구축하세요. 
-                  둘째, 새로운 디바이스를 실험하세요. 셋째, 데이터 중심 접근을 채택하세요. 
-                  넷째, 사용자 중심 디자인을 유지하세요. 다섯째, 지속적으로 학습하고 적응하세요.
-                </p>
-              </div>
-
-              {/* Conclusion */}
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">
-                  결론: 미래는 디바이스를 넘어선다
-                </h2>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  모바일 퍼스트의 죽음은 끝이 아닌 새로운 시작입니다. 
-                  디바이스의 경계를 넘어 사용자 중심의 경험을 설계하는 것이 
-                  2026년 디지털 비즈니스의 생존 조건입니다.
-                </p>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Vertex Studio는 이미 수십 개 기업의 옴니채널 전환을 성공적으로 이끌었습니다. 
-                  이제 당신의 비즈니스도 디바이스를 넘어선 차원으로 도약할 준비가 되었습니다.
-                </p>
-                <p className="text-gray-600 leading-relaxed">
-                  이 다섯 가지 팩트는 옴니채널이 비즈니스 성장의 핵심임을 보여줍니다. 
-                  옴니채널은 더 이상 기술적 과제가 아닌, 비즈니스 성장을 위한 필수 전략입니다. 
-                  지금 바로 옴니채널을 도입하여 당신의 비즈니스를 차원 높게 성장시키세요.
-                </p>
+                <div className="flex items-start gap-3">
+                  <ShoppingBag className="w-5 h-5 text-orange-600 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <strong className="text-gray-800">오프라인 → 온라인:</strong>
+                    <p className="text-gray-600 text-sm mt-1">매장 보고 온라인 주문 가능</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Users className="w-5 h-5 text-orange-600 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <strong className="text-gray-800">통합 고객 정보:</strong>
+                    <p className="text-gray-600 text-sm mt-1">어디서든 동일한 혜택 제공</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-orange-600 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <strong className="text-gray-800">편리한 반품:</strong>
+                    <p className="text-gray-600 text-sm mt-1">어디서든 쉬운 반품 처리</p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Tags */}
-            <div className="flex flex-wrap gap-2 mt-12 pt-8 border-t border-gray-200">
-              {blogData.tags.map((tag, index) => (
-                <span key={index} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          </motion.article>
+            <p className="text-gray-600 leading-relaxed mb-6">
+              이런 경험은 고객들에게 큰 편리함을 제공합니다. 내가 원하는 
+              때에 원하는 방식으로 쇼핑할 수 있기 때문입니다. 시간과 장소에 
+              제약받지 않고 자유롭게 쇼핑할 수 있게 됩니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed">
+              기업 입장에서도 고객들이 더 만족하고 더 자주 구매하게 
+              되어 매출이 증가합니다. 온라인과 오프라인이 서로 경쟁하는 
+              것이 아니라, 함께 협력해서 고객 가치를 높이는 것입니다.
+            </p>
+          </div>
+
+          {/* Section 2: Success Story */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">성공 사례: 스타일픽스</h2>
+            
+            <p className="text-gray-600 leading-relaxed mb-6">
+              스타일픽스는 패션 브랜드로, 3년 전 옴니채널 전략을 도입하여 
+              큰 성공을 거둔 기업입니다. 이전에는 온라인과 오프라인이 
+              완전히 분리되어 있어 고객들이 많은 불편을 겪었습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              가장 큰 문제는 재고 정보가 공유되지 않는 것이었습니다. 
+              온라인으로 재고가 있다고 나와도 매장에 가보면 없는 경우가 
+              많았고, 반대로 매장에 있는 제품이 온라인에는 없는 경우도 
+              많았습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              스타일픽스는 모든 매장과 온라인의 재고 정보를 실시간으로 
+              공유하는 시스템을 구축했습니다. 이제 고객들은 어디서든 
+              정확한 재고 정보를 확인할 수 있게 되었습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed">
+              또한 고객 정보도 통합했습니다. 온라인에서 쌓은 적립금을 
+              매장에서 사용할 수 있게 되고, 매장에서 구매한 내역도 온라인 
+              계정에 자동으로 기록되었습니다. 고객들은 어디에서 쇼핑해도 
+              자신의 정보가 유지되는 것을 확인할 수 있었습니다.
+            </p>
+          </div>
+
+          {/* Section 3: Key Changes */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">어떤 변화들이 있었나요?</h2>
+            
+            <p className="text-gray-600 leading-relaxed mb-6">
+              첫 번째 변화는 '클릭 앤 콜렉트' 서비스입니다. 고객들이 
+              온라인으로 주문하고 가까운 매장에서 픽업할 수 있게 되었습니다. 
+              배송을 기다릴 필요 없이 바로 제품을 받을 수 있어 인기가 
+              많았습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              두 번째는 '무료 반품' 서비스입니다. 온라인으로 구매한 
+              제품을 어떤 매장에서든 무료로 반품할 수 있게 되었습니다. 
+              고객들은 구매 심리적 부담이 줄어들어 온라인 구매가 크게 
+              증가했습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              세 번째는 '스마트 피팅룸'입니다. 매장 피팅룸에 태블릿을 
+              설치해서 다른 색상이나 사이즈를 확인하고, 없는 제품은 
+              온라인으로 주문해서 매장에서 받을 수 있게 했습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed">
+              네 번째는 '개인화된 추천'입니다. 고객의 구매 이력을 분석해서 
+              개인에게 맞는 제품을 추천하고, 매장에 방문하면 맞춤형 
+              할인 쿠폰을 제공했습니다.
+            </p>
+          </div>
+
+          {/* Section 4: Results */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">어떤 결과가 있었나요?</h2>
+            
+            <p className="text-gray-600 leading-relaxed mb-6">
+              옴니채널 전략을 도입한 후 스타일픽스의 매출은 67% 
+              증가했습니다. 온라인 매출은 120%나 늘었고, 오프라인 
+              매출도 35% 증가했습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              고객 만족도도 크게 향상되었습니다. 고객 만족도 점수가 
+              42점에서 61점으로 45%나 상승했습니다. 특히 20대 
+              고객들의 만족도 향상이 두드러졌습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              온라인과 오프라인을 모두 이용하는 고객들의 구매 금액은 
+              한 곳만 이용하는 고객들보다 2.3배 더 높았습니다. 
+              채널을 넘나들며 쇼핑하는 고객들이 더 많은 돈을 쓰는 
+              것입니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed">
+              또한 재고 비용도 28% 줄었습니다. 모든 매장의 재고를 
+              효율적으로 관리하고, 필요한 곳에 재고를 옮길 수 있게 
+              되었기 때문입니다.
+            </p>
+          </div>
+
+          {/* Section 5: Key Success Factors */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">성공의 비결은 무엇인가요?</h2>
+            
+            <p className="text-gray-600 leading-relaxed mb-6">
+              첫 번째 비결은 '고객 중심'이었습니다. 모든 결정을 
+              고객의 관점에서 내렸습니다. 고객들이 어떤 불편을 겪고, 
+              무엇을 원하는지를 먼저 파악하고 그에 맞춰 시스템을 
+              개선했습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              두 번째는 '데이터 통합'이었습니다. 온라인과 오프라인의 
+              모든 데이터를 하나로 합쳐서 고객에 대한 360도 뷰를 
+              만들었습니다. 이를 통해 개인화된 서비스를 제공할 수 
+              있었습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              세 번째는 '직원 교육'이었습니다. 매장 직원들에게 온라인 
+              시스템 사용법을 교육하고, 온라인 주문을 처리하는 방법을 
+              가르쳤습니다. 직원들이 변화를 이해하고 지지하는 것이 
+              중요했습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed">
+              네 번째는 '점진적 변화'였습니다. 모든 것을 한 번에 
+              바꾸려고 하지 않고, 작은 성공부터 시작해서 점차 
+              확산했습니다. 먼저 몇 개 매장에서 시도해보고 성공하면 
+              전체로 확대하는 방식이었습니다.
+            </p>
+          </div>
+
+          {/* Section 6: Lessons for Others */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">다른 기업들을 위한 조언</h2>
+            
+            <p className="text-gray-600 leading-relaxed mb-6">
+              옴니채널은 큰 기업만 할 수 있는 것이 아닙니다. 
+              작은 가게도 시작할 수 있습니다. 먼저 온라인과 오프라인의 
+              재고 정보를 통합하는 것부터 시작해보세요.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              기술 투자만으로는 충분하지 않습니다. 조직 문화와 
+              직원들의 마음가짐 변화가 더 중요합니다. 온라인팀과 
+              오프라인팀이 서로 협력하고, 함께 고객을 위해 일하는 
+              문화를 만들어야 합니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              고객들의 피드백을 적극적으로 들어야 합니다. 어떤 
+              불편이 있고, 어떤 서비스를 원하는지 계속 물어보고 
+              개선해야 합니다. 고객들이 직접 원하는 것이 최고의 
+              옴니채널 전략입니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed">
+              마지막으로 인내심을 가지세요. 옴니채널은 하룻밤 사이에 
+              완성되는 것이 아닙니다. 몇 년에 걸쳐 점진적으로 
+              개선해나가는 장기적인 과정입니다. 작은 성공들을 
+              쌓아가면서 나아가야 합니다.
+            </p>
+          </div>
+
+          {/* Conclusion */}
+          <div className="mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">기억해야 할 것들</h2>
+            
+            <p className="text-gray-600 leading-relaxed mb-6">
+              옴니채널은 온라인과 오프라인을 연결해서 고객들에게 
+              더 나은 쇼핑 경험을 제공하는 방식입니다. 고객들은 
+              어디에서든 일관된 서비스를 받을 수 있게 됩니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              성공적인 옴니채널은 기술 투자를 넘어서 고객 중심의 
+              사고와 조직 문화 변화를 필요로 합니다. 모든 팀이 
+              함께 협력해서 고객 가치를 높여야 합니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              스타일픽스의 사례에서 볼 수 있듯이, 잘 구현된 옴니채널은 
+              매출 증가와 고객 만족도 향상으로 이어집니다. 고객들이 
+              더 만족하고 더 자주 구매하게 됩니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed">
+              미래의 쇼핑은 온라인과 오프라인의 경계가 더 흐려질 
+              것입니다. 지금부터 옴니채널을 준비하는 기업들이 미래의 
+              성공을 이끌어갈 것입니다.
+            </p>
+          </div>
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2 mt-12 pt-8 border-t border-gray-200">
+            {blogData.tags.map((tag, index) => (
+              <span key={index} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
+                #{tag}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Related Posts */}
-      <section className="px-6 md:px-12 pb-20 bg-gray-50">
+      <section className="px-6 md:px-12 pt-16 pb-20 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold text-gray-900 mb-8">관련 글</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -322,7 +404,7 @@ const BlogPost4: React.FC = () => {
           </div>
         </div>
       </section>
-    </div>
+    </motion.article>
   );
 };
 

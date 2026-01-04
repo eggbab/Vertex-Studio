@@ -1,313 +1,378 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, Tag, User, ArrowUpRight, Zap, ShoppingCart, Newspaper, TrendingUp } from 'lucide-react';
+import { ArrowUpRight, Calendar, User, Tag, Zap, Image, Server, Smartphone, CheckCircle, AlertTriangle } from 'lucide-react';
 
 const BlogPost5: React.FC = () => {
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const forceScrollToTop = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      if (document.scrollingElement) {
+        document.scrollingElement.scrollTop = 0;
+      }
+    };
+
+    forceScrollToTop();
+    
+    const timers = [
+      setTimeout(forceScrollToTop, 0),
+      setTimeout(forceScrollToTop, 10),
+      setTimeout(forceScrollToTop, 50)
+    ];
+
+    const animationTimer = setTimeout(() => {
+      setIsReady(true);
+    }, 100);
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+      clearTimeout(animationTimer);
+    };
+  }, []);
+
   const blogData = {
-    title: "속도가 곧 매출이다: 웹 성능의 경제학",
-    date: "2025년 12월 10일",
+    title: "웹사이트 속도 높이는 간단한 방법",
+    date: "2025년 11월 28일",
     category: "Performance",
-    author: "Vertex Studio 팀",
-    readTime: "10분",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2574&auto=format&fit=crop",
-    tags: ["웹 성능", "최적화", "매출", "Core Web Vitals"]
+    readTime: "9분",
+    author: "개발팀",
+    tags: ["속도", "최적화", "웹"]
   };
 
   const relatedPosts = [
     {
-      title: "전환율을 3배 높이는 디자인의 물리학",
-      date: "2025년 10월 24일",
-      category: "Design",
-      slug: "conversion-design-physics"
+      title: "웹사이트를 멋지게 만드는 3D 기술",
+      date: "2025년 11월 12일",
+      category: "Technology",
+      slug: "webgl-depth-technology"
     },
     {
-      title: "WebGL: 무거움 없이 깊이감을 더하는 기술",
-      date: "2025년 11월 12일",
-      category: "Engineering",
-      slug: "webgl-depth-technology"
+      title: "온라인과 오프라인을 잇는 쇼핑의 미래",
+      date: "2025년 10월 15일",
+      category: "Business",
+      slug: "omnichannel-strategy"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-4">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2 text-gray-900 hover:text-[#3186FF] transition-colors">
-              <ArrowLeft className="w-4 h-4" />
-              <span className="font-medium">홈으로</span>
-            </Link>
-            <div className="flex items-center gap-4">
-              <Link to="/blog" className="text-sm text-gray-500 hover:text-[#3186FF] transition-colors">블로그 목록</Link>
-              <span className="text-sm text-gray-500">Vertex Studio Blog</span>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
+      animate={isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.6 }}
+      className="min-h-screen"
+    >
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-6 md:px-12">
+      <section className="px-6 md:px-12 pt-32 pb-16 bg-gradient-to-br from-green-50 to-teal-50">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            {/* Category Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 text-green-600 rounded-full text-sm font-medium mb-6">
-              <Zap className="w-4 h-4" />
-              {blogData.category}
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-4">
+              <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
+                {blogData.category}
+              </span>
+              <span className="text-gray-500 text-sm">{blogData.readTime}</span>
             </div>
-
-            {/* Title */}
-            <h1 className="text-4xl md:text-6xl font-display font-bold text-gray-900 mb-8 leading-tight tracking-tighter">
-              {blogData.title}
-            </h1>
-
-            {/* Meta Info */}
-            <div className="flex flex-wrap items-center gap-6 text-gray-500 mb-12">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                <span>{blogData.date}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <User className="w-4 h-4" />
-                <span>{blogData.author}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4" />
-                <span>{blogData.readTime} 읽기</span>
-              </div>
-            </div>
-          </motion.div>
+            <Link 
+              to="/blog" 
+              className="flex items-center gap-2 text-gray-600 hover:text-green-600 transition-colors text-sm font-medium"
+            >
+              블로그 목록으로 돌아가기
+              <ArrowUpRight className="w-4 h-4" />
+            </Link>
+          </div>
+          
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-gray-900">
+            웹사이트 속도 높이는 간단한 방법
+          </h1>
+          
+          <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+            느린 웹사이트 때문에 고객들을 잃지 마세요. 
+            오늘 당장 적용할 수 있는 속도 개선 팁들입니다.
+          </p>
+          
+          <div className="flex items-center gap-6 text-gray-500 text-sm">
+            <span className="flex items-center gap-2">
+              <User className="w-4 h-4" />
+              {blogData.author}
+            </span>
+            <span className="flex items-center gap-2">
+              <Calendar className="w-4 h-4" />
+              {blogData.date}
+            </span>
+          </div>
         </div>
       </section>
 
-      {/* Content */}
-      <section className="px-6 md:px-12 pb-20">
+      {/* Main Content */}
+      <section className="px-6 md:px-12 py-16 bg-white">
         <div className="max-w-4xl mx-auto">
-          <motion.article
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="prose prose-lg max-w-none"
-          >
-            {/* Introduction */}
-            <div className="text-xl text-gray-600 leading-relaxed mb-12 font-light">
-              <p className="mb-6">
-                웹 성능은 더 이상 기술적 문제가 아닙니다. 
-                이제는 직접적인 매출 문제입니다. Google의 연구에 따르면, 
-                페이지 로딩 시간이 1초에서 3초로 늘어나면 이탈률이 32% 증가하고, 
-                5초로 늘어나면 90%나 증가합니다.
-              </p>
-              <p>
-                Vertex Studio는 100개 이상의 이커머스 사이트를 분석했습니다. 
-                로딩 시간이 2초 이하인 사이트의 평균 전환율은 4.8%였지만, 
-                4초 이상인 사이트는 1.2%에 불과했습니다. 4배의 차이입니다.
-              </p>
-            </div>
+          
+          {/* Introduction */}
+          <div className="mb-12">
+            <p className="text-gray-600 leading-relaxed text-lg mb-6">
+              웹사이트가 3초 이상 로딩되면 대부분의 사람들은 그냥 
+              떠나버립니다. 연구에 따르면 로딩 속도가 1초 느려질 때마다 
+              전환율은 7%씩 감소합니다. 속도는 단순한 기술 문제가 
+              아니라 비즈니스의 성패를 좌우하는 중요한 요소입니다.
+            </p>
+            
+            <p className="text-gray-600 leading-relaxed text-lg">
+              다행히 웹사이트 속도를 높이는 것은 어렵지 않습니다. 
+              몇 가지 간단한 원리만 알면 누구나 손쉽게 개선할 수 있습니다. 
+              이 글에서는 복잡한 기술 없이도 바로 적용할 수 있는 
+              실용적인 팁들을 알려드립니다.
+            </p>
+          </div>
 
-            {/* Main Content */}
-            <div className="space-y-12">
-              {/* Part 1: 속도의 경제학 */}
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">
-                  팩트 1: 1초가 수십억 원을 결정한다
-                </h2>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  웹 성능은 더 이상 기술적 문제가 아닙니다. 
-                  이제는 직접적인 매출 문제입니다. Google의 연구에 따르면, 
-                  페이지 로딩 시간이 1초에서 3초로 늘어나면 이탈률이 32% 증가하고, 
-                  5초로 늘어나면 90%나 증가합니다.
-                </p>
-                
-                <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-lg mb-6">
-                  <p className="text-gray-800 font-medium">
-                    💡 핵심 인사이트: Amazon은 로딩 시간을 0.1초 개선했을 때 
-                    매출이 1% 증가했습니다. 이는 연간 수천억 원의 효과입니다. 
-                    웹 성능은 비즈니스 성장의 핵심 동력입니다.
-                  </p>
+          {/* Section 1: Images */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <Image className="w-8 h-8 text-green-600" />
+              이미지 최적화
+            </h2>
+            
+            <p className="text-gray-600 leading-relaxed mb-6">
+              이미지는 웹사이트에서 가장 많은 용량을 차지하는 요소입니다. 
+              대부분의 웹사이트에서 전체 용량의 50-70%가 이미지입니다. 
+              그래서 이미지를 최적화하는 것이 속도 개선에 가장 효과적입니다.
+            </p>
+
+            <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-lg mb-6">
+              <div className="flex items-center gap-3 mb-3">
+                <Zap className="w-6 h-6 text-green-600" />
+                <h3 className="text-lg font-bold text-gray-900">이미지 최적화 효과</h3>
+              </div>
+              <div className="text-center mb-4">
+                <div className="text-4xl font-bold text-green-600 mb-2">70%</div>
+                <p className="text-gray-700">용량 감소 효과</p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-green-200 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <Image className="w-8 h-8 text-green-600" />
+                  </div>
+                  <p className="text-sm text-gray-700 font-medium">크기 조정</p>
+                  <p className="text-xs text-gray-600 mt-1">필요한 크기만 사용</p>
                 </div>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Vertex Studio는 100개 이상의 이커머스 사이트를 분석했습니다. 
-                  로딩 시간이 2초 이하인 사이트의 평균 전환율은 4.8%였지만, 
-                  4초 이상인 사이트는 1.2%에 불과했습니다. 4배의 차이입니다.
-                </p>
-                
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  실제로 한 패션 이커머스 기업이 페이지 로딩 시간을 4.2초에서 1.8초로 개선한 결과, 
-                  월간 매출이 45% 증가했습니다. 이는 단순히 기술적 개선이 아닌, 
-                  직접적인 매출 향상이었습니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed">
-                  속도의 세 가지 핵심 사실을 기억하세요: 첫째, 1초의 차이가 수십억 원의 차이를 만듭니다. 
-                  둘째, 사용자는 3초를 기다리지 않습니다. 셋째, 속도는 곧 신뢰도입니다. 
-                  이제 속도는 선택이 아닌 생존 문제입니다.
-                </p>
-              </div>
-
-              {/* Part 2: Core Web Vitals의 과학 */}
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">
-                  팩트 2: Core Web Vitals이 성공을 결정한다
-                </h2>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Google은 2021년부터 Core Web Vitals을 검색 순위 요인으로 사용합니다. 
-                  이는 더 이상 선택이 아닌 필수입니다. LCP, FID, CLS 세 가지 지표가 
-                  당신의 비즈니스 성공을 결정합니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  LCP(Largest Contentful Paint)는 2.5초 이내여야 합니다. 
-                  4초 이상인 페이지는 검색 순위에서 15% 하락합니다. 
-                  FID(First Input Delay)는 100ms 이내, CLS(Cumulative Layout Shift)는 0.1 이내여야 합니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  우리는 Core Web Vitals을 개선한 50개 사이트를 분석했습니다. 
-                  모든 지표를 개선한 사이트의 평균 순위 상승은 23.5%였고, 
-                  오가닉 트래픽은 67% 증가했습니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed">
-                  Core Web Vitals의 세 가지 원칙을 기억하세요: 첫째, 측정해야 합니다. 
-                  둘째, 최적화해야 합니다. 셋째, 지속적으로 모니터링해야 합니다. 
-                  이 원칙들을 따르면 Core Web Vitals은 강력한 성장 도구가 됩니다.
-                </p>
-              </div>
-
-              {/* Part 3: 실제 최적화 사례 */}
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">
-                  팩트 3: 성능 최적화 성공 사례와 데이터
-                </h2>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Vertex Studio는 수십 개 기업의 웹 성능 최적화를 성공적으로 이끌었습니다. 
-                  이 데이터들은 웹 성능이 비즈니스에 미치는 영향을 명확하게 보여줍니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  대형 이커머스 기업이 웹 성능 최적화를 진행한 결과, 
-                  페이지 로딩 시간이 5.2초에서 2.1초로 개선되었습니다. 
-                  이탈률이 45% 감소하고, 전환율이 67% 증가했으며, 월간 매출이 120% 상승했습니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  뉴스 미디어 사이트가 성능 최적화를 도입한 결과, 
-                  페이지 로딩 시간이 3.8초에서 1.5초로 단축되었습니다. 
-                  사용자 체류 시간이 85% 증가하고, 페이지뷰가 120% 늘었으며, 
-                  구독 전환율이 45% 향상되었습니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed">
-                  웹 성능 최적화는 더 이상 기술적 과제가 아닙니다. 
-                  비즈니스 성장을 위한 필수 전략입니다. 
-                  속도를 개선하면 고객 만족도, 매출, 브랜드 신뢰도가 모두 향상됩니다.
-                </p>
-              </div>
-
-              {/* Part 4: 기술적 구현 가이드 */}
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">
-                  팩트 4: 웹 성능 최적화 기술 구현 가이드
-                </h2>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  웹 성능 최적화는 복잡해 보이지만, 올바른 접근법을 따르면 충분히 가능합니다. 
-                  우리는 5년간의 경험을 통해 최적의 구현 프로세스를 정리했습니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  첫째, 이미지 최적화가 핵심입니다. WebP, AVIF 같은 현대적 포맷을 사용하고, 
-                  반응형 이미지를 구현하며, 지연 로딩을 적용하세요. 이미지는 페이지 용량의 70%를 차지합니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  둘째, 코드 분할이 필수입니다. 번들 크기를 줄이고, 라우트별로 코드를 분할하며, 
-                  동적 임포트를 사용하세요. 초기 로딩 시간을 50% 이상 단축할 수 있습니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  셋째, 캐싱 전략이 중요합니다. 브라우저 캐시, CDN, 서비스 워커를 활용하여 
-                  반복적인 요청을 최소화하세요. 캐시 적중률을 90% 이상으로 높일 수 있습니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed">
-                  넷째, 서버 응답 시간을 최적화해야 합니다. TTFB(Time to First Byte)를 600ms 이내로 
-                  단축하고, HTTP/2, HTTP/3를 사용하며, 서버 사이드 렌더링을 고려하세요.
-                </p>
-              </div>
-
-              {/* Part 5: 미래의 웹 성능 */}
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">
-                  팩트 5: 2026년 웹 성능 전망
-                </h2>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  2026년에는 웹 성능이 더욱 중요해질 것입니다. 
-                  5G, Edge Computing, WebAssembly 같은 기술들이 새로운 기회를 제공하지만, 
-                  사용자의 기대치도 더 높아질 것입니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  5G 네트워크는 이론적으로 1Gbps의 속도를 제공하지만, 
-                  실제로는 기기 성능과 웹 최적화가 더 중요합니다. 
-                  5G 환경에서도 느린 웹사이트는 사용자를 잃습니다.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Edge Computing은 지연 시간을 10ms 이내로 단축할 수 있습니다. 
-                  Cloudflare Workers, Fastly Compute@Edge 같은 서비스를 활용하여 
-                  전 세계 사용자에게 일관된 성능을 제공하세요.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed">
-                  WebAssembly는 복잡한 계산을 브라우저에서 직접 실행할 수 있게 합니다. 
-                  이미지 처리, 데이터 분석, 3D 렌더링 같은 무거운 작업을 
-                  서버 없이 클라이언트에서 처리할 수 있습니다.
-                </p>
-              </div>
-
-              {/* Conclusion */}
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">
-                  결론: 속도는 더 이상 선택이 아니다
-                </h2>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  2025년, 웹 성능은 기술적 문제를 넘어 비즈니스의 생존 문제입니다. 
-                  속도가 느린 웹사이트는 고객을 잃고, 매출을 감소시키며, 
-                  검색 순위에서 밀려납니다.
-                </p>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Vertex Studio는 속도 최적화를 단순한 기술 작업이 아닌, 
-                  비즈니스 성장을 위한 필수 전략으로 접근합니다. 
-                  데이터 기반의 최적화로 당신의 비즈니스도 속도의 힘을 경험하세요.
-                </p>
-                <p className="text-gray-600 leading-relaxed">
-                  이 다섯 가지 팩트는 웹 성능이 비즈니스 성장의 핵심임을 보여줍니다. 
-                  속도는 더 이상 기술적 과제가 아닌, 비즈니스 성장을 위한 필수 전략입니다. 
-                  지금 바로 웹 성능을 최적화하여 당신의 비즈니스를 차원 높게 성장시키세요.
-                </p>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <CheckCircle className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <p className="text-sm text-gray-700 font-medium">압축</p>
+                  <p className="text-xs text-gray-600 mt-1">품질 유지하며 용량 감소</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-purple-200 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <Zap className="w-8 h-8 text-purple-600" />
+                  </div>
+                  <p className="text-sm text-gray-700 font-medium">최신 포맷</p>
+                  <p className="text-xs text-gray-600 mt-1">WebP, AVIF 사용</p>
+                </div>
               </div>
             </div>
 
-            {/* Tags */}
-            <div className="flex flex-wrap gap-2 mt-12 pt-8 border-t border-gray-200">
-              {blogData.tags.map((tag, index) => (
-                <span key={index} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          </motion.article>
+            <p className="text-gray-600 leading-relaxed mb-6">
+              가장 간단한 방법은 이미지 크기를 줄이는 것입니다. 
+              필요한 크기보다 더 큰 이미지를 사용하지 마세요. 웹사이트에 
+              표시될 크기에 맞게 이미지를 리사이즈하세요. 예를 들어 
+              500픽셀 너비로 표시될 이미지라면 2000픽셀짜리 원본을 
+              사용할 필요가 없습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed">
+              이미지 포맷도 중요합니다. JPEG는 사진에 좋고, PNG는 
+              투명 배경이 필요한 이미지에 좋습니다. 최신 포맷인 WebP는 
+              JPEG보다 25-35% 더 작은 용량으로 같은 품질을 제공합니다.
+            </p>
+          </div>
+
+          {/* Section 2: Caching */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">캐싱 활용하기</h2>
+            
+            <p className="text-gray-600 leading-relaxed mb-6">
+              캐싱은 한 번 다운로드한 파일을 다시 다운로드하지 않고 
+              컴퓨터에 저장해서 사용하는 기술입니다. 이를 통해 반복 
+              방문 시 로딩 속도를 크게 향상시킬 수 있습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              브라우저 캐시를 설정하면 CSS, JavaScript, 이미지 같은 
+              파일들을 사용자 컴퓨터에 저장할 수 있습니다. 다음에 방문할 때 
+              이 파일들을 다시 다운로드할 필요 없이 바로 사용할 수 있습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              CDN(Content Delivery Network)도 큰 도움이 됩니다. 
+              전 세계에 분산된 서버에서 콘텐츠를 제공하면 지리적 거리로 
+              인한 지연을 줄일 수 있습니다. 사용자와 가장 가까운 
+              서버에서 파일을 받게 되므로 속도가 빨라집니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed">
+              캐시 만료 기간도 적절히 설정해야 합니다. 자주 바뀌지 
+              않는 파일들은 길게 설정하고, 자주 바뀌는 파일들은 짧게 
+              설정하여 최신 콘텐츠를 제공하면서도 속도를 유지해야 합니다.
+            </p>
+          </div>
+
+          {/* Section 3: Code Optimization */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">코드 최적화</h2>
+            
+            <p className="text-gray-600 leading-relaxed mb-6">
+              CSS와 JavaScript 코드도 최적화해야 합니다. 불필요한 
+              코드를 제거하고, 파일을 압축하고, 여러 파일을 하나로 
+              합치면 로딩 속도가 향상됩니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              CSS와 JavaScript 파일을 압축(minify)하면 파일 크기를 
+              20-30% 줄일 수 있습니다. 공백, 주석, 불필요한 문자들을 
+              제거하는 간단한 과정입니다. 대부분의 빌드 도구들이 
+              자동으로 이 작업을 해줍니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              여러 개의 작은 파일보다는 하나의 큰 파일이 더 효율적입니다. 
+              파일을 요청하는 횟수가 줄어들기 때문입니다. 하지만 너무 
+              큰 파일은 오히려 해가 될 수 있으니 적절한 크기로 
+              나누는 것이 좋습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed">
+              JavaScript는 페이지 하단에 배치하는 것이 좋습니다. 
+              페이지가 먼저 로딩되고 나서 JavaScript가 실행되게 하면 
+              사용자들이 콘텐츠를 더 빨리 볼 수 있습니다.
+            </p>
+          </div>
+
+          {/* Section 4: Server Performance */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">서버 성능</h2>
+            
+            <p className="text-gray-600 leading-relaxed mb-6">
+              아무리 프론트엔드를 최적화해도 서버가 느리면 소용이 
+              없습니다. 서버 응답 시간은 200밀리초 이내가 이상적입니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              좋은 호스팅을 사용하는 것이 중요합니다. 저렴한 공유 
+              호스팅은 다른 사이트와 자원을 공유하므로 속도가 
+              느려질 수 있습니다. VPS나 클라우드 호스팅을 고려해보세요.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              데이터베이스 쿼리도 최적화해야 합니다. 느린 쿼리가 
+              있다면 인덱스를 추가하거나 쿼리를 개선하여 속도를 
+              높일 수 있습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed">
+              서버 캐싱도 중요합니다. 자주 요청되는 데이터를 
+              메모리에 캐싱하면 데이터베이스 조회 없이 빠르게 
+              응답할 수 있습니다.
+            </p>
+          </div>
+
+          {/* Section 5: Mobile Optimization */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">모바일 최적화</h2>
+            
+            <p className="text-gray-600 leading-relaxed mb-6">
+              이제 대부분의 트래픽은 모바일에서 발생합니다. 모바일에서 
+             의 경험을 최적화하는 것이 필수적입니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              모바일에서는 네트워크가 느릴 수 있으므로 파일 크기를 더 
+              작게 만들어야 합니다. 특히 이미지와 비디오 파일 크기를 
+              줄이는 것이 중요합니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              반응형 이미지를 사용하세요. 화면 크기에 맞는 적절한 
+              이미지를 제공하여 불필요한 데이터 전송을 줄일 수 있습니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed">
+              터치 이벤트도 최적화해야 합니다. 클릭 이벤트보다 터치 
+              이벤트가 더 빠르게 반응하게 만들어 사용자 경험을 
+              향상시킬 수 있습니다.
+            </p>
+          </div>
+
+          {/* Section 6: Testing */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">테스트와 측정</h2>
+            
+            <p className="text-gray-600 leading-relaxed mb-6">
+              개선을 위해서는 먼저 현재 상태를 측정해야 합니다. 
+              PageSpeed Insights, GTmetrix, WebPageTest 같은 도구들을 
+              사용하여 웹사이트 속도를 측정해보세요.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              Core Web Vitals 지표들을 확인하세요. LCP(가장 큰 
+              콘텐츠 로딩 시간), FID(첫 상호작용 지연 시간), 
+              CLS(레이아웃 변화)가 중요합니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              실제 사용자들의 경험도 측정해야 합니다. Real User 
+              Monitoring(RUM) 도구를 사용하여 실제 사용자들의 속도 
+              데이터를 수집하고 분석하세요.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed">
+              개선 후에는 다시 측정하여 효과를 확인하세요. A/B 테스트를 
+              통해 어떤 개선이 효과적인지 검증할 수도 있습니다.
+            </p>
+          </div>
+
+          {/* Conclusion */}
+          <div className="mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">기억해야 할 것들</h2>
+            
+            <p className="text-gray-600 leading-relaxed mb-6">
+              웹사이트 속도는 사용자 경험과 비즈니스 성공에 직접적인 
+              영향을 미칩니다. 느린 사이트는 고객을 잃고 매출을 
+              감소시킵니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              이미지 최적화, 캐싱, 코드 최적화, 서버 성능 개선, 
+              모바일 최적화가 속도 향상의 핵심입니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed mb-6">
+              측정하고 개선하는 과정을 지속적으로 반복해야 합니다. 
+              한 번의 개선으로 끝나는 것이 아니라 계속해서 모니터링하고 
+              최적화해야 합니다.
+            </p>
+
+            <p className="text-gray-600 leading-relaxed">
+              작은 개선들이 모여 큰 변화를 만듭니다. 오늘부터 하나씩 
+              적용해보세요. 사용자들은 더 빠른 경험에 감사할 것입니다.
+            </p>
+          </div>
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2 mt-12 pt-8 border-t border-gray-200">
+            {blogData.tags.map((tag, index) => (
+              <span key={index} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
+                #{tag}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Related Posts */}
-      <section className="px-6 md:px-12 pb-20 bg-gray-50">
+      <section className="px-6 md:px-12 pt-16 pb-20 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold text-gray-900 mb-8">관련 글</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -326,7 +391,7 @@ const BlogPost5: React.FC = () => {
           </div>
         </div>
       </section>
-    </div>
+    </motion.article>
   );
 };
 

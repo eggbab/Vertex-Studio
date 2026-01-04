@@ -14,7 +14,7 @@ const TypingText: React.FC = () => {
       setBlink((prev) => !prev);
     }, 500);
     return () => clearTimeout(timeout2);
-  }, [blink]);
+  }, []);
 
   useEffect(() => {
     if (subIndex === words[index].length + 1 && !reverse) {
