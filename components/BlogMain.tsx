@@ -9,7 +9,7 @@ const BlogMain: React.FC = () => {
       title: "전환율을 3배 높이는 디자인의 물리학",
       date: "2025년 10월 24일",
       category: "Design",
-      image: "https://images.unsplash.com/photo-1559028012-c72a97b19c7e?q=80&w=2574&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=2564&auto=format&fit=crop",
       excerpt: "대부분의 웹사이트는 방문자의 90%를 놓치고 있습니다. 이는 디자인이 아름답지 않아서가 아니라, 인간의 심리와 행동 패턴을 제대로 이해하지 못했기 때문입니다. Vertex Studio는 5년간의 데이터 분석을 통해 전환율을 3배 높이는 디자인 원리를 발견했습니다. 이 글에서는 F-패턴 시선 흐름, 색채 심리학, 마이크로 인터랙션의 과학적 원리를 실제 사례와 함께 깊이 있게 다룹니다.",
       readTime: "8분",
       slug: "conversion-design-physics",
@@ -29,7 +29,7 @@ const BlogMain: React.FC = () => {
       title: "2026년 웹 디자인 트렌드: 중력을 거스르다",
       date: "2025년 12월 05일",
       category: "Trends",
-      image: "https://images.unsplash.com/photo-1621839673055-66132adfcd3c?q=80&w=2574&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop",
       excerpt: "2025년이 끝나갈 무렵, 웹 디자인은 또 다른 전환점을 맞이하고 있습니다. 더 이상 평면적인 2D 공간에 갇히지 않고, 중력을 거스르는 3차원적 경험으로 나아가고 있습니다. Vertex Studio는 전 세계 500개 이상의 웹사이트를 분석하며 2026년의 디자인 트렌드를 예측했습니다. 공간적 인터페이스, 유체적 애니메이션, AI 개인화의 미래를 지금 만나보세요.",
       readTime: "12분",
       slug: "2026-design-trends",
@@ -39,7 +39,7 @@ const BlogMain: React.FC = () => {
       title: "모바일 퍼스트가 죽었다",
       date: "2025년 11월 28일",
       category: "Strategy",
-      image: "https://images.unsplash.com/photo-1512941937309-157bb6b3ad2e?q=80&w=2574&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2574&auto=format&fit=crop",
       excerpt: "'모바일 퍼스트'는 더 이상 유효한 전략이 아닙니다. 2025년 현재, 사용자는 하루에 평균 17번의 디바이스를 전환하며 경험을 이어갑니다. 데스크탑, 모바일, 태블릿, 웨어러블, 스마트 TV까지 모든 화면에서 일관된 경험을 제공하는 '옴니채널 퍼스트' 시대가 도래했습니다. 이 글에서는 디바이스 경계를 넘나드는 디자인 전략과 실전 구현 사례를 상세히 분석합니다.",
       readTime: "9분",
       slug: "mobile-first-is-dead",
@@ -74,7 +74,7 @@ const BlogMain: React.FC = () => {
   const filteredBlogs = allBlogs.filter(blog => {
     const matchesCategory = selectedCategory === "전체" || blog.category === selectedCategory;
     const matchesSearch = blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         blog.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+      blog.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -122,10 +122,10 @@ const BlogMain: React.FC = () => {
               </span>
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed mb-8">
-              Vertex Studio가 탐구하는 디지털 혁신의 최전선. 
+              Vertex Studio가 탐구하는 디지털 혁신의 최전선.
               데이터 기반의 인사이트와 실전 경험을 공유합니다.
             </p>
-            
+
             {/* Search Bar */}
             <div className="max-w-md mx-auto mb-8">
               <div className="relative">
@@ -152,11 +152,10 @@ const BlogMain: React.FC = () => {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-6 py-2 rounded-full font-medium transition-all ${
-                    selectedCategory === category
+                  className={`px-6 py-2 rounded-full font-medium transition-all ${selectedCategory === category
                       ? "bg-[#111827] text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  }`}
+                    }`}
                 >
                   {category}
                 </button>
@@ -185,9 +184,9 @@ const BlogMain: React.FC = () => {
                 <Link to={`/blog/${blog.slug}`} className="block">
                   {/* Image */}
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-6 relative border border-gray-100 shadow-sm hover:shadow-lg transition-shadow duration-300">
-                    <img 
-                      src={blog.image} 
-                      alt={blog.title} 
+                    <img
+                      src={blog.image}
+                      alt={blog.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />

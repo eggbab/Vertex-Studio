@@ -22,6 +22,16 @@ import BlogPost4 from './components/BlogPost4';
 import BlogPost5 from './components/BlogPost5';
 import BlogPost6 from './components/BlogPost6';
 import ScrollToTop from './components/ScrollToTop';
+import PricingQuote from './components/PricingQuote';
+import PaymentResult from './components/PaymentResult';
+import Login from './components/Login';
+import AuthCallback from './components/AuthCallback';
+import MyOrders from './components/MyOrders';
+import OrderDetail from './components/OrderDetail';
+import AdminDashboard from './components/AdminDashboard';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import { AuthProvider } from './lib/auth-context';
+import { OrdersProvider } from './lib/orders-context';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
 function HomePage() {
@@ -65,19 +75,32 @@ function HomePage() {
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/blog" element={<BlogMain />} />
-        <Route path="/blog/conversion-design-physics" element={<BlogPost1 />} />
-        <Route path="/blog/webgl-depth-technology" element={<BlogPost2 />} />
-        <Route path="/blog/2026-design-trends" element={<BlogPost3 />} />
-        <Route path="/blog/mobile-first-is-dead" element={<BlogPost4 />} />
-        <Route path="/blog/speed-equals-revenue" element={<BlogPost5 />} />
-        <Route path="/blog/accessibility-competitiveness" element={<BlogPost6 />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <OrdersProvider>
+        <Router>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/blog" element={<BlogMain />} />
+            <Route path="/blog/conversion-design-physics" element={<BlogPost1 />} />
+            <Route path="/blog/webgl-depth-technology" element={<BlogPost2 />} />
+            <Route path="/blog/2026-design-trends" element={<BlogPost3 />} />
+            <Route path="/blog/mobile-first-is-dead" element={<BlogPost4 />} />
+            <Route path="/blog/speed-equals-revenue" element={<BlogPost5 />} />
+            <Route path="/blog/accessibility-competitiveness" element={<BlogPost6 />} />
+            <Route path="/quote" element={<PricingQuote />} />
+            <Route path="/quote/success" element={<PaymentResult type="success" />} />
+            <Route path="/quote/fail" element={<PaymentResult type="fail" />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
+            <Route path="/my-orders" element={<MyOrders />} />
+            <Route path="/order/:orderId" element={<OrderDetail />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          </Routes>
+        </Router>
+      </OrdersProvider>
+    </AuthProvider>
   );
 }
 

@@ -8,19 +8,22 @@ const blogs = [
     title: "전환율을 3배 높이는 디자인의 물리학",
     date: "2025년 10월 24일",
     category: "Design",
-    slug: "conversion-design-physics"
+    slug: "conversion-design-physics",
+    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=2564&auto=format&fit=crop"
   },
   {
     title: "WebGL: 무거움 없이 깊이감을 더하는 기술",
     date: "2025년 11월 12일",
     category: "Engineering",
-    slug: "webgl-depth-technology"
+    slug: "webgl-depth-technology",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2574&auto=format&fit=crop"
   },
   {
     title: "2026년 웹 디자인 트렌드: 중력을 거스르다",
     date: "2025년 12월 05일",
     category: "Trends",
-    slug: "2026-design-trends"
+    slug: "2026-design-trends",
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop"
   }
 ];
 
@@ -46,17 +49,29 @@ const BlogSection: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {blogs.map((blog, i) => (
-            <Link to={`/blog/${blog.slug}`} key={i} className="group block p-6 border border-gray-200 rounded-xl hover:border-gray-300 transition-colors">
-              <div className="mb-4">
-                <span className={`px-3 py-1 ${getCategoryColor(blog.category)} rounded-full text-xs font-medium`}>
-                  {blog.category}
-                </span>
+            <Link to={`/blog/${blog.slug}`} key={i} className="group block border border-gray-200 rounded-xl hover:border-gray-300 transition-all hover:shadow-lg overflow-hidden">
+              {/* Thumbnail Image */}
+              <div className="aspect-[16/10] overflow-hidden">
+                <img
+                  src={blog.image}
+                  alt={blog.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors leading-tight">
-                {blog.title}
-              </h3>
-              <div className="text-gray-500 text-sm">
-                {blog.date}
+              {/* Content */}
+              <div className="p-6">
+                <div className="mb-4">
+                  <span className={`px-3 py-1 ${getCategoryColor(blog.category)} rounded-full text-xs font-medium`}>
+                    {blog.category}
+                  </span>
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors leading-tight">
+                  {blog.title}
+                </h3>
+                <div className="text-gray-500 text-sm">
+                  {blog.date}
+                </div>
               </div>
             </Link>
           ))}

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, User, LogOut } from 'lucide-react';
+import { useAuth } from '../lib/auth-context';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -94,9 +96,37 @@ const Header: React.FC = () => {
 
           {/* Buttons */}
           <div className="hidden md:flex items-center gap-2 shrink-0">
-            <button className="px-6 py-2.5 bg-[#111827] hover:bg-black text-white text-xs font-bold rounded-full transition-all shadow-lg hover:shadow-xl hover:scale-105 cursor-hover whitespace-nowrap">
-              무료 진단
-            </button>
+            {user ? (
+              <>
+                <Link 
+                  to={user.role === 'admin' ? '/admin' : '/my-orders'}
+                  className="px-4 py-2.5 text-gray-600 hover:text-gray-900 text-xs font-medium transition-all cursor-hover whitespace-nowrap flex items-center gap-1.5"
+                >
+                  <User className="w-3.5 h-3.5" />
+                  {user.role === 'admin' ? '관리자' : user.name}
+                </Link>
+                <button
+                  onClick={logout}
+                  className="px-3 py-2.5 text-gray-400 hover:text-gray-600 text-xs transition-all cursor-hover"
+                  title="로그아웃"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </>
+            ) : (
+              <Link 
+                to="/login"
+                className="px-4 py-2.5 text-gray-600 hover:text-gray-900 text-xs font-medium transition-all cursor-hover whitespace-nowrap"
+              >
+                로그인
+              </Link>
+            )}
+            <Link 
+              to="/quote"
+              className="px-6 py-2.5 bg-[#111827] hover:bg-black text-white text-xs font-bold rounded-full transition-all shadow-lg hover:shadow-xl hover:scale-105 cursor-hover whitespace-nowrap"
+            >
+              견적 문의
+            </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -182,15 +212,41 @@ const Header: React.FC = () => {
                 
                 {/* CTA Section */}
                 <div className="p-6 border-t border-gray-100">
-                  <button 
-                    onClick={() => scrollToSection('pricing')}
-                    className="w-full py-4 bg-[#111827] text-white font-bold rounded-2xl text-lg shadow-xl hover:bg-black transition-all hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    지금 매출 올리기
-                  </button>
-                  <p className="text-center text-gray-400 text-xs mt-3">
-                    무료 상담 신청하기
-                  </p>
+                  {user ? (
+                    <>
+                      <Link
+                        to={user.role === 'admin' ? '/admin' : '/my-orders'}
+                        onClick={() => setIsMenuOpen(false)}
+                        className="w-full py-4 bg-[#111827] text-white font-bold rounded-2xl text-lg shadow-xl hover:bg-black transition-all flex items-center justify-center gap-2"
+                      >
+                        <User size={20} />
+                        {user.role === 'admin' ? '관리자 페이지' : '내 주문'}
+                      </Link>
+                      <button
+                        onClick={() => { logout(); setIsMenuOpen(false); }}
+                        className="w-full mt-3 py-3 text-gray-500 text-sm flex items-center justify-center gap-2"
+                      >
+                        <LogOut size={16} />
+                        로그아웃
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button 
+                        onClick={() => scrollToSection('pricing')}
+                        className="w-full py-4 bg-[#111827] text-white font-bold rounded-2xl text-lg shadow-xl hover:bg-black transition-all hover:scale-[1.02] active:scale-[0.98]"
+                      >
+                        지금 매출 올리기
+                      </button>
+                      <Link
+                        to="/login"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="block text-center text-gray-400 text-xs mt-3 hover:text-gray-600"
+                      >
+                        로그인하기
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             </motion.div>

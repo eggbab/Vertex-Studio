@@ -1,56 +1,65 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Check, Star, Sparkles } from 'lucide-react';
+import { Check, Star, Sparkles, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const plans = [
   {
-    name: "One-Time Launch",
-    price: "3,000,000",
-    period: "부터 (1회성)",
-    desc: "신규 런칭이나 단기 캠페인을 위한 완벽한 시작입니다. 고퀄리티 디자인과 개발로 임팩트를 남기세요.",
+    name: "랜딩 제작 패키지",
+    price: "1,990,000",
+    period: "원 (1회)",
+    desc: "커스텀 원페이지 랜딩 제작. 문의폼, 채널톡, GA4 세팅까지 올인원 패키지로 바로 런칭하세요.",
     features: [
-      "맞춤형 기획 및 카피라이팅",
-      "고해상도 디자인 (Figma)",
-      "반응형 웹 개발 (Mobile/PC)",
-      "기본 SEO 세팅",
-      "GA4 / Pixel 설치 지원",
-      "제작 기간: 2주"
+      "커스텀 원페이지 랜딩 제작",
+      "문의폼 또는 카톡/전화 연결",
+      "채널톡/카카오채널 설치",
+      "GA4 + 이벤트 세팅",
+      "도메인 연결 1회",
+      "7일 텍스트 수정 무제한"
     ],
-    highlight: false
+    highlight: false,
+    cta: "견적 확인하기",
+    link: "/quote"
   },
   {
-    name: "Growth Subscription",
-    price: "1,500,000",
-    period: "/ 월 (구독형)",
-    desc: "지속적인 성장을 위한 파트너십. 데이터를 기반으로 매월 디자인과 문구를 최적화하여 전환율을 높입니다.",
+    name: "월 운영 구독",
+    price: "290,000",
+    period: "원 / 월",
+    desc: "호스팅 + 수정 무제한. 문구·사진·FAQ 등 운영에 필요한 모든 변경을 48시간 내 처리해 드립니다.",
     features: [
-      "All One-Time Launch 기능 포함",
-      "월 2회 A/B 테스트 진행",
-      "월간 데이터 분석 리포트 제공",
-      "디자인/카피 무제한 부분 수정",
-      "전담 그로스 매니저 배정",
-      "서버/유지보수 비용 무료"
+      "호스팅/배포/점검 포함",
+      "문구·가격·사진 교체 무제한",
+      "후기/FAQ/링크 변경 무제한",
+      "48시간 SLA 보장",
+      "동시 진행 1건 (Queue 관리)",
+      "언제든 해지 가능"
     ],
-    highlight: true
+    highlight: true,
+    cta: "구독 포함 견적 보기",
+    link: "/quote"
   },
   {
-    name: "Enterprise",
-    price: "별도 문의",
-    period: "",
-    desc: "대규모 트래픽과 복잡한 기능이 필요한 기업을 위한 맞춤형 솔루션입니다. 시스템 구축부터 브랜딩까지.",
+    name: "추가 옵션",
+    price: "390,000",
+    period: "원~",
+    desc: "필요한 기능만 선택하세요. 문의 자동정리, 추가 페이지 등 옵션을 자유롭게 조합할 수 있습니다.",
     features: [
-      "대규모 웹사이트 리뉴얼",
-      "CMS (관리자 페이지) 구축",
-      "3D / WebGL 인터랙션",
-      "글로벌(다국어) 사이트 제작",
-      "사내 디자인 시스템 구축",
-      "연간 유지보수 계약 가능"
+      "문의 자동정리 (+390,000원)",
+      "→ 구글시트 저장 + 이메일 알림",
+      "추가 페이지 1개 (+690,000원)",
+      "→ 이벤트/프로모션 랜딩",
+      "옵션은 견적에서 선택",
+      "조합에 따라 할인 적용"
     ],
-    highlight: false
+    highlight: false,
+    cta: "옵션 선택하기",
+    link: "/quote"
   }
 ];
 
 const Pricing: React.FC = () => {
+  const navigate = useNavigate();
+  
   return (
     <section id="pricing" className="py-20 md:py-32 bg-white relative z-10 overflow-hidden">
       {/* Background Ambience */}
@@ -69,10 +78,10 @@ const Pricing: React.FC = () => {
               <Sparkles className="w-3 h-3" /> Pricing Plans
             </span>
             <h2 className="text-4xl md:text-5xl lg:text-7xl font-display font-bold text-gray-900 mb-6 md:mb-8 tracking-tighter leading-tight">
-              합리적인 투자, <br className="md:hidden" />확실한 <span className="text-[#3186FF]">ROI</span>
+              투명한 <span className="text-[#3186FF]">정찰가</span>, <br className="md:hidden" />깔끔한 견적
             </h2>
             <p className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto break-keep leading-relaxed font-light">
-              단발성 제작부터 지속적인 성장을 위한 구독 모델까지.<br/> 비즈니스 단계에 맞는 최적의 플랜을 선택하세요.
+              옵션 선택만으로 실시간 견적 확인.<br/>복잡한 협의 없이 바로 결제하고 제작을 시작하세요.
             </p>
           </motion.div>
         </div>
@@ -125,13 +134,15 @@ const Pricing: React.FC = () => {
               </ul>
 
               <button 
-                className={`w-full py-5 rounded-2xl font-bold text-sm tracking-wide transition-all transform hover:scale-[1.02] active:scale-[0.98] ${
+                onClick={() => navigate(plan.link)}
+                className={`w-full py-5 rounded-2xl font-bold text-sm tracking-wide transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 ${
                   plan.highlight 
                     ? 'bg-white text-black hover:bg-gray-100 shadow-lg' 
                     : 'bg-[#111827] text-white hover:bg-black shadow-lg shadow-gray-300/50'
                 }`}
               >
-                {plan.highlight ? '지금 구독 시작하기' : '문의하기'}
+                {plan.cta}
+                <ArrowRight className="w-4 h-4" />
               </button>
             </motion.div>
           ))}

@@ -1,59 +1,71 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, HelpCircle, TrendingUp, Clock, Shield, Zap } from 'lucide-react';
+import { ChevronDown, HelpCircle, Clock, Shield, Zap, CreditCard, Globe, RefreshCw, Settings } from 'lucide-react';
 
 const faqs = [
   {
-    question: "Vertex Studio는 어떤 회사인가요?",
-    answer: "Vertex Studio는 오직 '팔리는' 랜딩페이지 제작에 특화된 디자인 스튜디오입니다. 심리학 기반의 카피라이팅과 데이터 주도형 디자인으로 고객을 설득하여, 대부분의 웹사이트가 놓치는 90%의 방문자를 실제 고객으로 전환시키는 프로세스를 설계합니다.",
-    icon: HelpCircle,
-    category: "회사 소개"
-  },
-  {
-    question: "제작 기간은 얼마나 걸리나요?",
-    answer: "One-Time Launch 프로젝트의 경우 평균 2주 내외로 완료됩니다. 기획(3일), 디자인(5일), 개발(5일), 최종 검수 및 런칭(2일) 단계로 진행되며, 복잡한 기능이나 대규모 프로젝트의 경우 규모에 따라 기간이 조정될 수 있습니다.",
-    icon: Clock,
-    category: "프로세스"
-  },
-  {
-    question: "전환율이 실제로 개선되나요?",
-    answer: "네, 데이터로 증명됩니다. Vertex Studio의 랜딩페이지는 평균 350%의 전환율 상승을 달성했습니다. A/B 테스트와 월간 데이터 분석을 통해 지속적으로 최적화하며, ROAS 200% 개선, 리드 수집 3.5배 증가 등 구체적인 성과를 보여드립니다.",
-    icon: TrendingUp,
-    category: "성과"
-  },
-  {
-    question: "One-Time Launch와 Growth Subscription의 차이점은?",
-    answer: "One-Time Launch는 단 한 번의 제작으로 완성된 고성능 랜딩페이지를 2주 안에 런칭하는 1회성 프로젝트입니다. Growth Subscription은 매월 데이터 분석을 통해 디자인과 카피를 지속적으로 개선하는 구독형 서비스로, 전담 그로스 매니저가 배정되어 월 2회 A/B 테스트를 진행합니다.",
+    question: "기본 패키지에는 무엇이 포함되나요?",
+    answer: "기본 패키지(199만원)에는 맞춤형 원페이지 랜딩, 문의 수단 1개 연결(채널톡/카카오채널 연동), GA4 기본 연결결, 도메인 연결, 그리고 런칭 후 7일간 텍스트 수정 케어가 포함됩니다. 전환율 높은 랜딩페이지를 빠르게 제작해 드립니다.",
     icon: Zap,
     category: "서비스"
   },
   {
-    question: "어떤 산업에 특화되어 있나요?",
-    answer: "특정 산업에 국한되지 않고 다양한 분야에서 성공 사례를 보유하고 있습니다. 주로 고관여 B2B 서비스(리드 생성), 건기식/뷰티 커머스(상품 판매), SaaS/스타트업(신규 런칭), 엔터프라이즈(브랜드 아이덴티티) 등 비즈니스 목표에 맞는 최적화 솔루션을 제공합니다.",
+    question: "제작 기간은 얼마나 걸리나요?",
+    answer: "기본 원페이지 랜딩은 평균 영업일 기준준 7일 내외로 완료됩니다. 추가 페이지가 있는 경우 페이지당 2~3일이 추가될 수 있습니다. 자료 준비 상황과 피드백 속도에 따라 일정이 달라질 수 있습니다.",
+    icon: Clock,
+    category: "제작"
+  },
+  {
+    question: "도메인이 없어도 제작 가능한가요?",
+    answer: "네, 가능합니다. 도메인이 없으신 경우 제작 과정에서 도메인 구매를 안내해 드립니다. 이미 보유하신 도메인이 있다면 해당 도메인에 연결해 드리며, 추가 비용은 없습니다.",
+    icon: Globe,
+    category: "제작"
+  },
+  {
+    question: "'문의 자동정리' 옵션은 무엇인가요?",
+    answer: "문의 자동정리(39만원)는 고객 문의가 들어오면 자동으로 구글 시트나 노션에 정리되는 기능입니다. 이름, 연락처, 문의 내용 등이 자동 정리되어 고객 관리가 훨씬 쉬워집니다. 소상공인분들께 특히 인기 있는 옵션입니다.",
+    icon: Settings,
+    category: "옵션"
+  },
+  {
+    question: "추가 페이지는 어떤 경우에 필요한가요?",
+    answer: "기본 패키지는 원페이지 랜딩입니다. 서비스 소개, 포트폴리오, 팀 소개, 이용약관 등 별도 페이지가 필요하시면 추가 페이지(페이지당 69만원)를 선택하시면 됩니다. 최대 10개까지 추가 가능합니다.",
     icon: HelpCircle,
-    category: "서비스"
+    category: "옵션"
   },
   {
-    question: "가격은 어떻게 되나요?",
-    answer: "One-Time Launch는 300만원부터 시작하며, Growth Subscription은 월 150만원입니다. Enterprise는 대규모 프로젝트 특성상 별도 견적을 제공합니다. 모든 가격은 VAT 별도이며, 초기 세팅비는 프로젝트 규모에 따라 별도 산정될 수 있습니다.",
-    icon: Shield,
-    category: "가격"
+    question: "월 운영 구독이 뭔가요?",
+    answer: "월 운영 구독(월 29만원)은 호스팅과 무제한 수정 가능한 풀 Full Care 서비스입니다. 텍스트, 이미지 교체, 후기 업데이트, 링크 수정 등 운영에 필요한 수정을 횟수 제한 없이 요청하실 수 있습니다. 단, 구조 변경이나 새 페이지 추가는 별도 작업입니다.",
+    icon: RefreshCw,
+    category: "구독"
   },
   {
-    question: "수정 및 유지보수는 어떻게 되나요?",
-    answer: "Growth Subscription 구독 시 디자인/카피 무제한 부분 수정과 서버/유지보수 비용이 무료로 제공됩니다. One-Time Launch 프로젝트 완료 후에도 별도 유지보수 계약을 통해 지원 가능하며, 6개월간 기본적인 기술 지원을 제공합니다.",
+    question: "월 구독 없이도 이용 가능한가요?",
+    answer: "네, 월 구독은 선택 사항입니다. 구독 없이 제작만 진행하셔도 됩니다. 제작된 파일을 압축하여 이메일로 보내드립니다. 다만 이 경우 호스팅 및 운영을 별도로 준비하셔야 하고, 제작 완료 후 수정이 필요하시면 건당 별도 비용이 발생합니다.",
+    icon: CreditCard,
+    category: "구독"
+  },
+  {
+    question: "결제는 어떻게 하나요?",
+    answer: "견적 페이지에서 옵션 선택 후 바로 결제하실 수 있습니다. 토스페이먼츠를 통해 카드, 계좌이체 등 다양한 결제 수단을 지원합니다. 결제 완료 후 담당자가 24시간 내에 연락드립니다.",
+    icon: CreditCard,
+    category: "결제"
+  },
+  {
+    question: "환불 정책은 어떻게 되나요?",
+    answer: "제작 착수 전에는 100% 환불됩니다. 제작 진행 중에는 진행 단계에 따라 부분 환불이 가능하며, 제작 완료 후에는 환불이 어렵습니다. 월 구독은 다음 결제일 전까지 해지 요청하시면 다음 달부터 결제되지 않습니다.",
     icon: Shield,
+    category: "결제"
+  },
+  {
+    question: "수정 요청은 어떻게 하나요?",
+    answer: "로그인 후 '내 주문' 페이지에서 수정 요청을 보내실 수 있습니다. 요청 내용을 작성해 주시면 48시간 내에 처리되며, 완료 시 이메일로 알림을 보내드립니다. 월 구독 고객은 무제한, 비구독 고객은 런칭 후 7일간 텍스트 수정이 무료입니다.",
+    icon: RefreshCw,
     category: "지원"
-  },
-  {
-    question: "작업 시작 전에 어떤 준비가 필요한가요?",
-    answer: "비즈니스 목표, 타겟 고객, 제품/서비스 정보, 브랜드 가이드라인(있는 경우), 경쟁사 분석 자료 등을 공유해주시면 됩니다. 상세한 브리핑을 통해 프로젝트 범위와 목표를 명확히 설정한 후 작업을 시작합니다.",
-    icon: HelpCircle,
-    category: "프로세스"
   }
 ];
 
-const categories = ["전체", "회사 소개", "서비스", "성과", "프로세스", "가격", "지원"];
+const categories = ["전체", "서비스", "제작", "옵션", "구독", "결제", "지원"];
 
 const FAQ: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState("전체");
@@ -84,14 +96,14 @@ const FAQ: React.FC = () => {
             viewport={{ once: true }}
           >
             <span className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-[#3186FF] bg-blue-50/50 rounded-full border border-blue-100 uppercase backdrop-blur-sm">
-              <HelpCircle className="w-3 h-3" /> Frequently Asked Questions
+              <HelpCircle className="w-3 h-3" /> 자주 묻는 질문
             </span>
             <h2 className="text-5xl md:text-7xl font-display font-bold text-gray-900 mb-8 tracking-tighter leading-tight">
               궁금한 점이<br className="md:hidden" /> 있으신가요?
             </h2>
             <p className="text-xl text-gray-500 max-w-2xl mx-auto break-keep leading-relaxed font-light">
-              Vertex Studio에 대해 가장 많이 묻는 질문들입니다.<br/>
-              더 궁금한 점이 있다면 언제든 연락주세요.
+              랜딩페이지 제작에 대해 가장 많이 묻는 질문들입니다.<br/>
+              더 궁금한 점이 있다면 언제든 문의해 주세요.
             </p>
           </motion.div>
         </div>
@@ -115,16 +127,14 @@ const FAQ: React.FC = () => {
 
         {/* FAQ Items */}
         <div className="max-w-4xl mx-auto space-y-4">
-          <AnimatePresence mode="wait">
-            {filteredFAQs.map((faq, index) => (
-              <motion.div
-                key={`${activeCategory}-${index}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ delay: index * 0.05, duration: 0.3 }}
-                className="group"
-              >
+          {filteredFAQs.map((faq, index) => (
+            <motion.div
+              key={`${activeCategory}-${index}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.05, duration: 0.3 }}
+              className="group"
+            >
                 <div
                   onClick={() => toggleFAQ(index)}
                   className={`p-6 rounded-2xl border cursor-pointer transition-all duration-300 ${
@@ -182,7 +192,6 @@ const FAQ: React.FC = () => {
                 </div>
               </motion.div>
             ))}
-          </AnimatePresence>
         </div>
 
         {/* Bottom CTA */}
@@ -195,9 +204,12 @@ const FAQ: React.FC = () => {
         >
           <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-full border border-blue-100">
             <span className="text-gray-600 font-medium">더 궁금한 점이 있으신가요?</span>
-            <button className="px-6 py-2 bg-[#111827] text-white text-sm font-bold rounded-full hover:bg-black transition-all hover:scale-105 cursor-hover">
-              전화 상담 신청
-            </button>
+            <a 
+              href="/quote"
+              className="px-6 py-2 bg-[#111827] text-white text-sm font-bold rounded-full hover:bg-black transition-all hover:scale-105 cursor-hover"
+            >
+              견적 문의하기
+            </a>
           </div>
         </motion.div>
       </div>

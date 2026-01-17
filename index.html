@@ -94,11 +94,19 @@
 
     // 즉시 스크롤 리셋 함수
     function forceScrollToTop() {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-      if (document.scrollingElement) {
-        document.scrollingElement.scrollTop = 0;
+      try {
+        window.scrollTo(0, 0);
+        if (document.documentElement) {
+          document.documentElement.scrollTop = 0;
+        }
+        if (document.body) {
+          document.body.scrollTop = 0;
+        }
+        if (document.scrollingElement) {
+          document.scrollingElement.scrollTop = 0;
+        }
+      } catch (e) {
+        // 스크롤 설정 실패 시 무시
       }
     }
 
@@ -118,6 +126,8 @@
     setTimeout(forceScrollToTop, 100);
   })();
 </script>
+    <!-- 토스페이먼츠 SDK -->
+    <script src="https://js.tosspayments.com/v1/payment"></script>
 </head>
   <body>
     <div id="root"></div>
